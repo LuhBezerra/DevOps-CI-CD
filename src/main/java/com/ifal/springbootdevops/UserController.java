@@ -16,7 +16,7 @@ public class UserController {
 	private UserRepository userRepository;
 
 	@GetMapping("/list")
-    public User listUser()
+    public @ResponseBody Iterable<User> listUsers()
     {
         return userRepository.findAll();
     }
