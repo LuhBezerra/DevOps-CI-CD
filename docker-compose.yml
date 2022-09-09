@@ -1,0 +1,41 @@
+version: '3'
+
+networks: 
+  mysql-network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker-config/app/Dockerfile
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
+    ports: 
+      - "9000:8080"
+    networks:
+      - mysql-network
+    depends_on:
+      - "db"
+  db:
+    build: ./docker-config/db/
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_EXTERNAL_PORT}:${MYSQL_INTERNAL_PORT}"
+    networks:
+      - mysql-network
+
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+    networks:
+      - mysql-network
