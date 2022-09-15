@@ -14,9 +14,9 @@ docker-compose up -d
 #### 4. Open the get url http://localhost:9000/users/list on browser
 #### 4. Or send a post to url http://localhost:9000/users/add on client http
 
-#### Important: Project use Adminer so you can see database details in http://localhost::8081
+#### Important: Project use Adminer so you can see database details in http://localhost:8081
 ```
-Project use Adminer so you can see database details in http://localhost::8081
+Project use Adminer so you can see database details in http://localhost:8081
 Check user and password in your .env 
 ```
 
