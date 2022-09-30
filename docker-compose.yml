@@ -4,8 +4,25 @@ networks:
   mysql-network:
     driver: bridge
 
+secrets:
+  db_password:
+    external: true
+  db_root_password:
+    external: true
+
 services:
-  app:
+  proxy:
+    build: ./docker-config/proxy
+    ports: 
+      - "80:81"
+    depends_on: 
+      - app1
+      - app2
+      - app3
+    networks:
+      - mysql-network
+
+  app1:
     build:
       context: ./
       dockerfile: ./docker-config/app/Dockerfile
@@ -17,12 +34,45 @@ services:
       MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
     secrets:
        - db_password
-    ports: 
-      - "9000:8080"
     networks:
       - mysql-network
     depends_on:
       - "db"
+
+  app2:
+    build:
+      context: ./
+      dockerfile: ./docker-config/app/Dockerfile
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: /run/secrets/db_password
+      MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
+    secrets:
+       - db_password
+    networks:
+      - mysql-network
+    depends_on:
+      - "db"  
+
+  app3:
+    build:
+      context: ./
+      dockerfile: ./docker-config/app/Dockerfile
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: /run/secrets/db_password
+      MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
+    secrets:
+       - db_password
+    networks:
+      - mysql-network
+    depends_on:
+      - "db"  
+
   db:
     build: ./docker-config/db/
     environment:
@@ -44,9 +94,3 @@ services:
       - 8081:8080
     networks:
       - mysql-network
-  
-secrets:
-  db_password:
-    external: true
-  db_root_password:
-    external: true
