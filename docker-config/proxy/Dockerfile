@@ -11,5 +11,3 @@ RUN openssl req -x509 -nodes \
    -out /etc/ssl/certs/nginx-selfsigned.crt;
 
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf
-RUN apk add policycoreutils
-RUN setsebool httpd_can_network_connect on -P
