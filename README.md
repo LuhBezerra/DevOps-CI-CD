@@ -6,13 +6,22 @@
 cp env-example .env
 ```
 
-#### 2. Build and up the containers 
+#### 2. Set docker secrets with docker
+- To use the secrets is necessary to create 2 txt files `db_password.txt` and `db_root_password.txt`
+- Then create the secrets
+  ```bash
+  docker secret create db_password db_password.txt
+  ```
+  ```bash
+  docker secret create db_root_password db_root_password.txt
+  ```
+#### 3. Build and up the containers 
 ```bash
 docker-compose up -d
 ```
 
-#### 4. Open the get url http://localhost:9000/users/list on browser
-#### 4. Or send a post to url http://localhost:9000/users/add on client http
+#### 4. Open the get url http://localhost:80/users/list on browser
+#### 4. Or send a post to url http://localhost:80/users/add on client http
 
 #### Important: Project use Adminer so you can see database details in http://localhost:8081
 ```
