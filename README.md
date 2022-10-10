@@ -6,9 +6,9 @@
 cp env-example .env
 ```
 
-#### 2. Set docker secrets with docker
+#### 2. Set docker secrets 
 - To use the secrets is necessary to create 2 txt files `db_password.txt` and `db_root_password.txt`
-- Then create the secrets
+- Then create the secrets with docker
   ```bash
   docker secret create db_password db_password.txt
   ```
