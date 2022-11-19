@@ -1,12 +1,18 @@
 # para ver as configurações das maquinas use >>> vagrant ssh-config
 
 Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
 
-      (1..2).each do |i|
-      config.vm.define "runner-#{i}" do |node|
-        config.vm.box = "ubuntu/jammy64"
-        node.vm.hostname = "host#{i}"
-      end
-    end
+  config.vm.define "runner-server-1" do |runner|
+    runner.vm.hostname = "runner-server-1"
   end
+
+  config.vm.define "runner-server-2" do |runner|
+    runner.vm.hostname = "runner-server-2"
+  end
+
+  config.vm.provision "ansible" do  |ansible|
+    ansible.playbook = "./ansible-playbooks/playbook.yml"
+  end
+end
   
