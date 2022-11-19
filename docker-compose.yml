@@ -13,10 +13,8 @@ services:
       MYSQL_HOST: db
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: /run/secrets/db_password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
-    secrets:
-       - db_password
     ports: 
       - "9000:8080"
     networks:
@@ -26,13 +24,10 @@ services:
   db:
     build: ./docker-config/db/
     environment:
-      MYSQL_ROOT_PASSWORD: /run/secrets/db_root_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: /run/secrets/db_password
-    secrets:
-       - db_root_password
-       - db_password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "${MYSQL_EXTERNAL_PORT}:${MYSQL_INTERNAL_PORT}"
     networks:
@@ -44,9 +39,3 @@ services:
       - 8081:8080
     networks:
       - mysql-network
-  
-secrets:
-  db_password:
-    external: true
-  db_root_password:
-    external: true
