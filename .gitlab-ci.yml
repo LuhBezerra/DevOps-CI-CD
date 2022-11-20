@@ -31,11 +31,11 @@ unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Maven test started"
-    # - “mvn test”
+    - mvn test
     - echo "Code coverage is 90%"
-  only:
-    - merge_requests
-    - master
+  # only:
+  #   - merge_requests
+  #   - master
 
 review-job:
   tags:
