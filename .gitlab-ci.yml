@@ -4,16 +4,24 @@ stages:          # List of stages for jobs, and their order of execution
   - review
   - production
 
-image: docker/compose:latest
-services:
-  - docker:dind 
+image: docker:20.10.16
 
-build-job:       # This job runs in the build stage, which runs first.
+services:
+  - docker:20.10.16-dind
+
+before_script:
+  - docker info
+
+build-job:
+  tags:       # This job runs in the build stage, which runs first.
+  - builder
   stage: build
   script:
     - echo "Compiling the code..."
-    - echo /update-git-tag.sh
-    # - docker build -t devops-app:v1 .
+    #- apk update && apk add git
+    #- echo ./update.git-tag.sh
+    #- echo $(eval "git describe --abbrev=0 --tags")
+    - docker build . -t devops-app:v1 -f docker-config/app/Dockerfile
     - echo "Compile complete."
   #only:
   #  - merge_requests
@@ -21,6 +29,8 @@ build-job:       # This job runs in the build stage, which runs first.
 
 
 unit-test-job:   # This job runs in the test stage.
+  tags:
+  - builder
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Maven test started"
@@ -31,6 +41,8 @@ unit-test-job:   # This job runs in the test stage.
     - master
 
 review-job:
+  tags:
+  - executor
   stage: review  
   script:
     - echo "revising application..."
@@ -39,6 +51,8 @@ review-job:
     - merge_requests
 
 deploy-job:      # This job runs in the deploy stage.
+  tags:
+  - executor
   stage: production  # It only runs when *both* jobs in the test stage complete successfully.
   environment: production
   script:
