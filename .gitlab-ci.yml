@@ -58,7 +58,7 @@ deploy-job:      # This job runs in the deploy stage.
     - apk update && apk add git
     - git config --global user.name ${GITLAB_USER_NAME}
     - git config --global user.email ${GITLAB_USER_EMAIL}
-    - git remote set-url origin git@gitlab.com:samuelveloso/spingbootdevops.git
+    - git remote set-url origin https://gitlab.com/samuelveloso/spingbootdevops.git
     - sh ./update-git-tag.sh
     - echo "Application successfully deployed."
   # only:
