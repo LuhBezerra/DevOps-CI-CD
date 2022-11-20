@@ -52,6 +52,10 @@ deploy-job:      # This job runs in the deploy stage.
   - executor
   stage: production  # It only runs when *both* jobs in the test stage complete successfully.
   environment: production
+  before_script:
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+
   script:
     - echo "Deploying application..."
     - apk update && apk add git
