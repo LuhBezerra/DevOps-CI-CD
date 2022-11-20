@@ -18,14 +18,11 @@ build-job:
   stage: build
   script:
     - echo "Compiling the code..."
-    #- apk update && apk add git
-    #- echo ./update.git-tag.sh
-    #- echo $(eval "git describe --abbrev=0 --tags")
-    - docker build . -t devops-app:v1 -f docker-config/app/Dockerfile
+    - docker build . -t devops-app -f docker-config/app/Dockerfile
     - echo "Compile complete."
-  #only:
-  #  - merge_requests
-  #  - master
+  only:
+    - merge_requests
+    - master
 
 
 unit-test-job:   # This job runs in the test stage.
