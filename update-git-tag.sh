@@ -6,4 +6,4 @@ UPDATED_VERSION=$((CURRENT_VERSION+1))
 git tag ${VERSION}
 git push --tags
 
-echo "#################### NEW TAG ${UPDATED_VERSION} ####################"
+echo "#################### NEW TAG ${CURRENT_VERSION} ####################"
