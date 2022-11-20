@@ -1,10 +1,9 @@
 #!/bin/bash
 
 CURRENT_VERSION=$(eval "git describe --abbrev=0 --tags")
-CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 
-VNUM=${CURRENT_VERSION_PARTS[1]}
+UPDATED_VERSION=$((CURRENT_VERSION+1))
+git tag ${VERSION}
+git push --tags
 
-UPDATED_VERSION=$((VNUM+1))
-VERSION="0.${UPDATED_VERSION}"
-echo ${VERSION}
+echo "#################### NEW TAG ${UPDATED_VERSION} ####################"
