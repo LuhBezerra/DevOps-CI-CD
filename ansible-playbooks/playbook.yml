@@ -35,16 +35,16 @@
       shell: usermod -aG docker gitlab-runner
 
     - name: Registrando gitlab-runner como docker executor
-      shell: sudo gitlab-runner register --non-interactive \
+      shell: sudo gitlab-runner register -n \
           --url "https://gitlab.com/" \
           --registration-token {{ reg_token }} \
-          --executor "docker" \
-          --docker-image alpine:latest \
+          --executor docker \
           --description "VM-Docker-Build" \
+          --docker-image "docker:20.10.16" \
+          --docker-privileged \
+          --docker-volumes "/certs/client"
           --tag-list "devops, builder" \
-          --run-untagged="true" \
-          --locked="false" \
-          --access-level="not_protected"
+          
 
 - hosts: runner-server-2
   become: yes
@@ -99,15 +99,14 @@
       shell: usermod -aG docker gitlab-runner
 
     - name: Registrando gitlab-runner como docker executor
-      shell: sudo gitlab-runner register --non-interactive \
+      shell: sudo gitlab-runner register -n \
           --url "https://gitlab.com/" \
           --registration-token {{ reg_token }} \
-          --executor "docker" \
-          --docker-image alpine:latest \
+          --executor docker \
           --description "VM-Docker-Executor" \
+          --docker-image "docker:20.10.16" \
+          --docker-privileged \
+          --docker-volumes "/certs/client"
           --tag-list "devops, executor" \
-          --run-untagged="true" \
-          --locked="false" \
-          --access-level="not_protected"
     
 
