@@ -36,3 +36,4 @@ build/
 db_password.txt
 db_root_password.txt
 .vagrant
+registration.token.env
