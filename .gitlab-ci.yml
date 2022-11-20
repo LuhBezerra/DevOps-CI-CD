@@ -26,14 +26,13 @@ build-job:
 
 
 unit-test-job:   # This job runs in the test stage.
-  image: maven:3.8-openjdk-11
-  image: docker:20.10.16
+  # image: maven:3.8-openjdk-11
   tags:
   - builder
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Maven test started"
-    - mvn test
+    # - mvn test
     - echo "Code coverage is 90%"
   # only:
   #   - merge_requests
