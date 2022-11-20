@@ -20,9 +20,9 @@ build-job:
     - echo "Compiling the code..."
     - docker build . -t devops-app -f docker-config/app/Dockerfile
     - echo "Compile complete."
-  only:
-    - merge_requests
-    - master
+  # only:
+  #   - merge_requests
+  #   - master
 
 
 unit-test-job:   # This job runs in the test stage.
@@ -33,9 +33,9 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Maven test started"
     - mvn test
     - echo "Code coverage is 90%"
-  only:
-    - merge_requests
-    - master
+  # only:
+  #   - merge_requests
+  #   - master
 
 review-job:
   tags:
