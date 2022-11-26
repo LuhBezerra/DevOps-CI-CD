@@ -11,10 +11,8 @@ Vagrant.configure("2") do |config|
     runner.vm.hostname = "runner-server-2"
   end
   
-  config.vm.provision "file", 
-    source: './docker-config/traefik/traefik.yml', 
-    destination: "/tmp/traefik/traefik.yml"
-  
+  config.vm.synced_folder "./docker-config/traefik/", "/traefik"
+
   config.vm.provision "ansible" do  |ansible|
     ansible.playbook = "./ansible-playbooks/playbook.yml"
   end

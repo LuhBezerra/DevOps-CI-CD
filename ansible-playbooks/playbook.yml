@@ -110,8 +110,8 @@
           --docker-volumes "/certs/client"
           --tag-list "devops, executor" \
 
-    - name: Executando Traefik da imagem Docker oficial 
-      shell: docker run -d -p 8083:8083 -p 83:83  \ -v $PWD/traefik.yml:/tmp/traefik/traefik.yml traefik:v2.9
+    - name: Executando Traefik
+      shell: cd docker-config/traefik/ && docker-compose up -d 
 
     
 
