@@ -110,8 +110,8 @@
           --docker-volumes "/certs/client"
           --tag-list "devops, executor" \
 
-    - name: Executando Traefik
-      shell: cd docker-config/traefik/ && docker-compose up -d 
+    - name: Executar Traefik
+      shell: cd /traefik && docker-compose up -d 
 
     
 
