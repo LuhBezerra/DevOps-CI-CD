@@ -18,19 +18,19 @@ build-job:
     - docker build -f docker-config/app/Dockerfile --pull -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
     - echo "Compile complete."
-  # only:
-  #   - merge_requests
-  #   - master
+  only:
+    - merge_requests
+    - master
 
 
 unit-test-job:   # This job runs in the test stage.
-  # image: maven:3.8-openjdk-11
+  image: registry.gitlab.com/samuelveloso/spingbootdevops
   tags:
   - builder
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Maven test started"
-    # - mvn test
+    - mvn test
     - echo "Code coverage is 90%"
   only:
     - merge_requests
