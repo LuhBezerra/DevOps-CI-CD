@@ -32,9 +32,9 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Maven test started"
     - mvn test
     - echo "Code coverage is 90%"
-  # only:
-  #   - merge_requests
-  #   - master
+  only:
+    - merge_requests
+    - master
 
 review-job:
   tags:
@@ -54,11 +54,7 @@ deploy-job:      # This job runs in the deploy stage.
 
   script:
     - echo "Deploying application..."
-    - apk update && apk add git
-    - git config --global user.name ${GITLAB_USER_NAME}
-    - git config --global user.email ${GITLAB_USER_EMAIL}
-    - git remote set-url origin git@gitlab.com:samuelveloso/spingbootdevops.git
-    - sh ./update-git-tag.sh
+    - docker-compose up -d
     - echo "Application successfully deployed."
   only:
     - master
