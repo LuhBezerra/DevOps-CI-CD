@@ -12,10 +12,11 @@ build-job:
   - builder
   stage: build
   before_script:
-  - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry-gitlab.com --password-stdin
+  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
   script:
     - echo "Compiling the code..."
-    - docker build -f docker-config/app/Dockerfile --pull -t $BUILD_IMAGE .
+    - docker build -f docker-config/app/Dockerfile --pull -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
     - echo "Compile complete."
   # only:
   #   - merge_requests
