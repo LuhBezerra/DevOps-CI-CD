@@ -1,6 +1,8 @@
 version: '3'
 
-networks: 
+networks:
+  traefik:
+    name: traefik
   mysql-network:
     driver: bridge
 
@@ -10,15 +12,22 @@ services:
       context: ./
       dockerfile: ./docker-config/app/Dockerfile
     environment:
+      NAME: app01
+      PORT: 80
       MYSQL_HOST: db
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_INTERNAL_PORT: ${MYSQL_INTERNAL_PORT}
-    ports: 
+    labels:
+      - traefik.http.routers.app1.rule=Host(`app01.127.0.0.1.nip.io`)
+      - traefik.http.services.app01.loadbalancer.server.port=80
+      - traefik.docker.network=traefik
+    ports:
       - "9000:8080"
     networks:
       - mysql-network
+      - traefik
     depends_on:
       - "db"
   db:
