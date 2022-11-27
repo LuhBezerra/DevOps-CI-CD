@@ -35,7 +35,7 @@ unit-test-job:   # This job runs in the test stage.
     - ls
     - cd target
     - ls
-    #- cat target/site/jacoco/index.html | grep
+    - cat target/site/jacoco/index.html | grep
 
   artifacts:
     reports:
