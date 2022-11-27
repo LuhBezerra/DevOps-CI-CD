@@ -32,15 +32,14 @@ unit-test-job:   # This job runs in the test stage.
   script:
     - echo "Maven test started"
     - mvn test
-    - ls
-    - cd target
-    - ls
-    - cat target/site/jacoco/index.html | grep
+    - echo "######------COVERAGE-------#######"
+    - cat target/site/jacoco/index.html | grep -o '<td class="ctr2" id="c0">.*</td>'
 
   artifacts:
     reports:
       junit:
         - target/surefire-reports/TEST.*.xml
+        - target/surefire/TEST.*.xml
   # only:
   #   - merge_requests
   #   - master
@@ -64,5 +63,5 @@ deploy-job:      # This job runs in the deploy stage.
     - echo "Deploying application..."
     - docker-compose up -d
     - echo "Application successfully deployed."
-  # only:
-  #   - master
+  only:
+    - master
