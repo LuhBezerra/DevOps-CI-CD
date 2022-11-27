@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
-	@Autowired
-	private UserRepository userRepository;
 
-	@GetMapping("/list")
-    public @ResponseBody Iterable<User> listUsers()
-    {
-        return userRepository.findAll();
-    }
+    // @Autowired
+    // private UserRepository userRepository;
 
-	@PostMapping("/add")
-    public User addUser(@Validated @RequestBody User user)
-    {
-        return userRepository.save(user);
-    }
+    // @GetMapping("/list")
+    // public @ResponseBody Iterable<User> listUsers()
+    // {
+    // return userRepository.findAll();
+    // }
+
+    // @PostMapping("/add")
+    // public User addUser(@Validated @RequestBody User user)
+    // {
+    // return userRepository.save(user);
+    // }
 
 }
