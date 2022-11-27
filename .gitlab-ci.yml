@@ -18,9 +18,9 @@ build-job:
     - docker build -f docker-config/app/Dockerfile --pull -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
     - echo "Compile complete."
-  # only:
-  #   - merge_requests
-  #   - master
+  only:
+    - merge_requests
+    - master
 
 
 unit-test-job:   # This job runs in the test stage.
@@ -32,9 +32,9 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Maven test started"
     - mvn test
     - echo "Code coverage is 90%"
-  # only:
-  #   - merge_requests
-  #   - master
+  only:
+    - merge_requests
+    - master
 
 review-job:
   tags:
@@ -50,12 +50,12 @@ deploy-job:      # This job runs in the deploy stage.
   tags:
   - executor
   stage: production  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
-  before_script:
-  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+  # environment: production
+  # before_script:
+  # - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
   script:
     - echo "Deploying application..."
     - docker-compose up -d
     - echo "Application successfully deployed."
-  only:
-    - master
+  # only:
+  #   - master
