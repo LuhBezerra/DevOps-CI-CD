@@ -52,7 +52,6 @@ review-job:
   image:
     name: lachlanevenson/k8s-kubectl:latest
     entrypoint: ["/bin/sh", "-c"]
-  stage: deploy
   environment: 
     name: review/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.review.app01.127.0.0.1.nip.io
